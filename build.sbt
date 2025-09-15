@@ -25,8 +25,8 @@ val specs2Test = Seq(
 lazy val acolyte = "org.eu.acolyte" %% "jdbc-scala" % "1.2.9" % Test
 
 // Licensing
-import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.HeaderPattern.commentBetween
-import de.heikoseeberger.sbtheader.{ CommentStyle, FileType, HeaderPlugin, LineCommentCreator }
+import sbtheader.HeaderPlugin.autoImport.HeaderPattern.commentBetween
+import sbtheader.{ CommentStyle, FileType, HeaderPlugin, LineCommentCreator }
 
 val licensing = Seq(
   headerLicense := Some(
