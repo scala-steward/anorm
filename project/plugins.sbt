@@ -10,7 +10,7 @@ addSbtPlugin("com.github.sbt" % "sbt-unidoc" % "0.6.1")
 
 addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.3.1")
 
-addSbtPlugin("cchantep" % "sbt-scaladoc-compiler" % "0.2")
+addSbtPlugin("cchantep" % "sbt-scaladoc-compiler" % "0.9")
 
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.7")
 

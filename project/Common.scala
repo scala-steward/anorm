@@ -101,7 +101,7 @@ object AnormGeneration {
 
     if (out.exists) out
     else {
-      IO.writer[File](out, "", IO.defaultCharset, false) { w ⇒
+      IO.writer[File](out, "", IO.defaultCharset, false) { w =>
         w.append("""package anorm
 
 /** Function adapters to work with extract data. */
