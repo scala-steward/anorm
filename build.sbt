@@ -19,7 +19,7 @@ val specs2Test = Seq(
   "specs2-core",
   "specs2-junit",
   "specs2-matcher-extra"
-).map("org.specs2" %% _ % "4.23.0" % Test cross (CrossVersion.for3Use2_13))
+).map(n => ("org.specs2" %% n % "4.23.0" % Test).cross(CrossVersion.for3Use2_13))
   .map(_.exclude("org.scala-lang.modules", "*"))
 
 lazy val acolyte = "org.eu.acolyte" %% "jdbc-scala" % "1.2.11" % Test
@@ -334,12 +334,13 @@ lazy val `anorm-parent` = project
   .settings(
     Seq(
       mimaPreviousArtifacts := Set.empty,
-      Compile / headerSources ++=
+      Compile / headerSources ++= Def.uncached {
         ((baseDirectory.value ** ("*.properties" || "*.md" || "*.sbt"))
           --- (baseDirectory.value ** "target" ** "*")
           --- (baseDirectory.value / ".github" ** "*")
-          --- (baseDirectory.value / "docs" ** "*")).get ++
-          (baseDirectory.value / "project" ** "*.scala" --- (baseDirectory.value ** "target" ** "*")).get
+          --- (baseDirectory.value / "docs" ** "*")).get() ++
+          (baseDirectory.value / "project" ** "*.scala" --- (baseDirectory.value ** "target" ** "*")).get()
+      }
     ) ++ licensing
   )
 
@@ -350,21 +351,20 @@ lazy val docs = project
   .settings(
     Seq(
       name := "anorm-docs",
-      (Test / unmanagedSourceDirectories) ++= {
+      Test / unmanagedSourceDirectories ++= {
         val manualDir = baseDirectory.value / "manual" / "working"
 
-        (manualDir / "javaGuide" ** "code").get ++ (manualDir / "scalaGuide" ** "code").get
+        (manualDir / "javaGuide" ** "code").get() ++ (manualDir / "scalaGuide" ** "code").get()
       },
       libraryDependencies ++= Seq(
         "org.playframework" %% "play-jdbc"   % "3.0.10" % Test,
         "org.playframework" %% "play-specs2" % "3.0.10" % Test
       ),
-      libraryDependencies ++= Seq(
-        "com.h2database" % "h2" % "1.4.199"
-      ),
-      (Compile / headerSources) ++=
+      libraryDependencies += "com.h2database" % "h2" % "1.4.199",
+      Compile / headerSources ++= Def.uncached {
         ((baseDirectory.value ** ("*.md" || "*.scala" || "*.xml"))
-          --- (baseDirectory.value ** "target" ** "*")).get
+          --- (baseDirectory.value ** "target" ** "*")).get()
+      }
     ) ++ licensing
   )
   .dependsOn(`anorm-core`)

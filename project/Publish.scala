@@ -15,17 +15,12 @@ object Publish {
     pomIncludeRepository   := { _ => false },
     autoAPIMappings        := true,
     apiURL                 := Some(url(s"$siteUrl/unidoc/anorm/")),
-    pomPostProcess         := transformPomDependencies { dep: XmlElem =>
+    pomPostProcess         := transformPomDependencies { (dep: XmlElem) =>
       if ((dep \ "groupId").text == "com.sksamuel.scapegoat") {
         Option.empty[XmlElem] // discard
       } else Some(dep)
     },
-    licenses := {
-      Seq(
-        "Apache 2.0" ->
-          url("https://www.apache.org/licenses/LICENSE-2.0")
-      )
-    },
+    licenses             := Seq(License.Apache2),
     homepage             := Some(url(siteUrl)),
     organizationName     := "The Play Framework Project",
     organizationHomepage := Some(url("https://playframework.com/")),
@@ -41,7 +36,7 @@ object Publish {
 
   // ---
 
-  private def transformPomDependencies(tx: XmlElem => Option[XmlNode]): XmlNode => XmlNode = { node: XmlNode =>
+  private def transformPomDependencies(tx: XmlElem => Option[XmlNode]): XmlNode => XmlNode = { (node: XmlNode) =>
     import scala.xml.{ NodeSeq, XML }
     import scala.xml.transform.{ RewriteRule, RuleTransformer }
 
