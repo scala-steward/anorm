@@ -41,7 +41,7 @@ jobs:
     with:
       java: 17
       scala: 2.13.x, 3.x
-      cmd: sbt ++$MATRIX_SCALA publishLocal test
+      cmd: 'sbt ";++$MATRIX_SCALA ;publishLocal ;test"'
 
   finish:
     name: Finish
