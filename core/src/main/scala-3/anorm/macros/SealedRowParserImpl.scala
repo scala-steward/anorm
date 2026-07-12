@@ -104,13 +104,12 @@ private[anorm] object SealedRowParserImpl {
       CaseDef(
         Bind(fallbackBind, Wildcard()),
         guard = None,
-        rhs =
-          '{
-            val msg =
-              "unexpected row type '%s'; expected: %s".format($fallbackVal, ${ Expr(cases.map(_._1)) }.mkString(", "))
+        rhs = '{
+          val msg =
+            "unexpected row type '%s'; expected: %s".format($fallbackVal, ${ Expr(cases.map(_._1)) }.mkString(", "))
 
-            RowParser.failed[A](Error(SqlMappingError(msg)))
-          }.asTerm
+          RowParser.failed[A](Error(SqlMappingError(msg)))
+        }.asTerm
       )
     }
 
